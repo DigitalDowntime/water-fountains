@@ -25,3 +25,19 @@ function showPosition(position) {
     document.getElementById("longitude").innerHTML = `Longitude: ${longitude}`;
 }
 
+function getWeightOfDeviceType() {
+    // Get device info
+    let deviceInfo = navigator.userAgent;
+    // Display device info in HTML
+    document.getElementById("deviceInfo").innerHTML = `Device Info: ${deviceInfo}`;
+
+    // If the device is a mobile device, return a weight of 1
+    if (deviceInfo.includes("Mobile")) {
+        document.getElementById("deviceType").innerHTML = `Device Type: Mobile`;
+        return 1;
+    } else {
+        document.getElementById("deviceType").innerHTML = `Device Type: not Mobile`;
+        // If the device is not a mobile device, return a weight of 0.5
+        return 0.5;
+    }
+}
