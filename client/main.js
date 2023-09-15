@@ -25,10 +25,10 @@ function showPosition(position) {
     document.getElementById("longitude").innerHTML = `Longitude: ${longitude}`;
 }
 
-// Older devices and laptops have worse accuracy, so their locations need to have a
-// lower weight when considering where their device says a water fountain's location is.
-// This info could be seen by looking at mobile, model, platform, and platform version.
-// This function gets the user's device info and returns a weight based on that info.
+// Laptops have worse location accuracy than mobile devices, so they should
+// have a lower weight when calculating positions of fountains. 
+// This function returns a weight of 1 if the device is a mobile device, and
+// a weight of 0.5 if the device is a laptop.
 function getWeight() {
     // Get device info
     let deviceInfo = navigator.userAgent;
@@ -37,8 +37,10 @@ function getWeight() {
 
     // If the device is a mobile device, return a weight of 1
     if (deviceInfo.includes("Mobile")) {
+        document.getElementById("deviceType").innerHTML = `Device Type: Mobile`;
         return 1;
     } else {
+        document.getElementById("deviceType").innerHTML = `Device Type: Laptop`;
         // If the device is not a mobile device, return a weight of 0.5
         return 0.5;
     }
