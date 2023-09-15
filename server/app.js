@@ -1,6 +1,7 @@
 import express from "express";
 import db from "./models/index.js";
 import fountainsRouter from "./routes/fountain.routes.js";
+import reviewsRouter from "./routes/review.routes.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -23,6 +24,8 @@ const app = express();
 app.use(express.json());
 
 app.use("/fountains", fountainsRouter);
+
+app.use("/reviews", reviewsRouter)
 
 let PORT = process.env.PORT
 

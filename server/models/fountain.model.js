@@ -6,7 +6,8 @@ const modelCreator = (mongoose) => {
                 latitude: Number,
                 longitude: Number,
                 altitude: Number,
-                rating: Number
+                starRating: Number,
+                timesLocationRecorded: Number
             },
             { timestamps: true }
         )
