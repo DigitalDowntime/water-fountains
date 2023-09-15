@@ -3,7 +3,11 @@ function getLocation() {
     // Check if the browser supports geolocation
     if (navigator.geolocation) {
         // If the browser supports geolocation, call showPosition. 
-        navigator.geolocation.getCurrentPosition(showPosition);
+        navigator.geolocation.getCurrentPosition(showPosition, () => {}, {
+            enableHighAccuracy: true,
+            timeout: 5000,
+            maximumAge: 0
+        });
     } else {
         // If the browser does not support geolocation, display an alert
         alert("Geolocation is not supported by this browser.");
