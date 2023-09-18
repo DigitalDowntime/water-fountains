@@ -6,7 +6,7 @@ import reviewsRouter from "./routes/review.routes";
 import usersRouter from "./routes/user.routes";
 import dotenv from "dotenv";
 import { ConnectOptions } from "mongoose";
-import connectMongoDBStore from "connect-mongodb-session";
+import MongoStore from "connect-mongo";
 import cors from "cors";
 
 dotenv.config();
@@ -49,16 +49,9 @@ declare module "express-session" {
 }
 
 // initialize session store
-const MongoDBStore = connectMongoDBStore(session);
-
-const sessionStore = new MongoDBStore({
-    uri: process.env.SESSION_STORE_URI || "",
-    collection: "sessions"
-}, (err) => {
-    if (err) {
-        console.error("Cannot connect to session store:", err);
-        process.exit();
-    }
+const sessionStore = new MongoStore({
+    mongoUrl: process.env.SESSION_STORE_URI || "",
+    autoRemove: "native"
 })
 
 // pass the session store into the express-session middleware
@@ -66,7 +59,7 @@ app.use(session({
     secret: process.env.SESSION_STORE_SECRET || "",
     cookie: { maxAge: 1000 * 60 * 60, secure: false },
     store: sessionStore,
-    resave: true,
+    resave: false,
     saveUninitialized: true
 }))
 
