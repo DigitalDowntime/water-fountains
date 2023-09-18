@@ -4,7 +4,7 @@ const Review = db.reviews;
 
 const router = express.Router();
 
-router.post("/new", async (req, res) => {
+router.post("/", async (req, res) => {
     try {
         let inserted = await Review.create(req.body);
         res.json({ success: true, inserted })
@@ -14,6 +14,16 @@ router.post("/new", async (req, res) => {
     }
 })
 
+router.get("/:reviewId", async (req, res) => {
+    try {
+        let reviewId = req.params.reviewId;
+        let review = await Review.findById(reviewId);
+        res.json({ "success": true, review });
+    } catch (err) {
+        console.error(err);
+        res.json({ "success": false, "error": err })
+    }
+})
 
 router.get("/fountain/:fountainId", async (req, res) => {
     try {
@@ -26,7 +36,7 @@ router.get("/fountain/:fountainId", async (req, res) => {
     }
 })
 
-router.delete("/remove/:reviewId", async (req, res) => {
+router.delete("/:reviewId", async (req, res) => {
     try {
         let reviewId = req.params.reviewId;
         let deleteResult = await Review.deleteOne({ "_id": reviewId });
