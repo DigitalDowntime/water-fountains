@@ -1,17 +1,6 @@
-import { Model, Mongoose, ObjectId, Schema } from "mongoose";
+import { Mongoose, Schema } from "mongoose";
 
-interface IFountainDocument {
-    _id: ObjectId,
-    latitude: number,
-    longitude: number,
-    altitude: number,
-    starRating?: number,
-    timesLocationRecorded: number
-}
-
-interface IFountainModel extends Model<IFountainDocument> { }
-
-const FountainSchema = new Schema<IFountainDocument, IFountainModel>(
+const FountainSchema = new Schema(
     {
         latitude: { type: Number, required: true },
         longitude: { type: Number, required: true },
@@ -24,9 +13,9 @@ const FountainSchema = new Schema<IFountainDocument, IFountainModel>(
 );
 
 const fountainModelCreator = (mongoose: Mongoose) => {
-    const Fountain = mongoose.model<IFountainDocument, IFountainModel>("fountain", FountainSchema);
+    const Fountain = mongoose.model("fountain", FountainSchema);
 
-    return Fountain
+    return Fountain;
 }
 
-export { fountainModelCreator, IFountainModel };
+export default fountainModelCreator;

@@ -1,24 +1,19 @@
-import { fountainModelCreator, IFountainModel } from "./fountain.model.js";
-import { reviewModelCreator, IReviewModel } from "./review.model.js";
-import mongoose, { Mongoose } from "mongoose";
+import fountainModelCreator from "./fountain.model";
+import reviewModelCreator from "./review.model";
+import userModelCreator from "./user.model";
+import mongoose from "mongoose";
 import dotenv from "dotenv";
 
 dotenv.config();
 
 mongoose.Promise = global.Promise;
 
-interface dbConfig {
-    mongoose: Mongoose,
-    url: string,
-    fountains: IFountainModel,
-    reviews: IReviewModel
-}
-
-const db: dbConfig = {
+const db = {
     mongoose: mongoose,
-    url: process.env.DB_URL || "",
+    uri: process.env.DB_URI || "",
     fountains: fountainModelCreator(mongoose),
-    reviews: reviewModelCreator(mongoose)
+    reviews: reviewModelCreator(mongoose),
+    users: userModelCreator(mongoose),
 };
 
 export default db;
