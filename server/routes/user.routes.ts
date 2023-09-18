@@ -7,8 +7,22 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
     try {
+        if (req.session.username) {
+            res.status(403).json({ success: false, error: "You are already logged in" });
+            return;
+        }
+
         let username = req.body.username;
         let plaintextPassword = req.body.password;
+
+        // check if user exists aready
+        let storedUser = await User.findOne({ username });
+        if (storedUser) {
+            res
+                .status(409)
+                .json({ success: false, error: "A user with that username already exists" });
+            return;
+        }
 
         let salt = await bcrypt.genSalt();
         let passwordHash = await bcrypt.hash(plaintextPassword, salt);
@@ -25,6 +39,7 @@ router.post("/login", async (req, res) => {
     try {
         if (req.session.username) {
             res.status(403).json({ success: false, error: "You are already logged in" })
+            return;
         }
 
         let username = req.body.username;
