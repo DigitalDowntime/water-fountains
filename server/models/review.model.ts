@@ -1,6 +1,7 @@
-import { Document, Model, Mongoose, Schema } from "mongoose";
+import { Model, Mongoose, ObjectId, Schema } from "mongoose";
 
-interface IReviewDocument extends Document {
+interface IReviewDocument {
+    _id: ObjectId,
     fountainId: string,
     starRating: number
 }

@@ -1,6 +1,7 @@
-import { Document, Model, Mongoose, Schema } from "mongoose";
+import { Model, Mongoose, ObjectId, Schema } from "mongoose";
 
-interface IFountainDocument extends Document {
+interface IFountainDocument {
+    _id: ObjectId,
     latitude: number,
     longitude: number,
     altitude: number,
