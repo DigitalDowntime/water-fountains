@@ -1,5 +1,5 @@
 import express from "express";
-import db from "../models/index.js";
+import db from "../models/index";
 const Fountain = db.fountains;
 const Review = db.reviews;
 

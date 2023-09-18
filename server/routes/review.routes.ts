@@ -1,5 +1,5 @@
 import express from "express";
-import db from "../models/index.js";
+import db from "../models/index";
 const Review = db.reviews;
 
 const router = express.Router();
