@@ -24,7 +24,7 @@ db.mongoose
     .then(() => {
         console.log("Connected to the database");
     })
-    .catch(err => {
+    .catch((err) => {
         console.error("Cannot connect to the database:", err);
         process.exit();
     });
@@ -45,6 +45,7 @@ app.use(express.json());
 declare module "express-session" {
     interface SessionData {
         username: string
+        user_id: string
     }
 }
 

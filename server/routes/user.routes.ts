@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.post("/", async (req, res) => {
     try {
-        if (req.session.username) {
+        if (req.session.user_id) {
             res.status(403).json({ success: false, error: "You are already logged in" });
             return;
         }
@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
 
 router.post("/login", async (req, res) => {
     try {
-        if (req.session.username) {
+        if (req.session.user_id) {
             res.status(403).json({ success: false, error: "You are already logged in" })
             return;
         }
@@ -56,6 +56,7 @@ router.post("/login", async (req, res) => {
                 res.status(401).json({ success: false, error: "Invalid credentials" });
             } else {
                 req.session.username = storedUser.username;
+                req.session.user_id = storedUser._id.toString();
                 req.session.save();
                 res.json({ success: true });
             }
@@ -68,10 +69,11 @@ router.post("/login", async (req, res) => {
 
 router.post("/logout", async (req, res) => {
     try {
-        if (!req.session.username) {
+        if (!req.session.user_id) {
             res.status(401).json({ success: false, error: "You are not logged in" });
         } else {
             req.session.username = undefined;
+            req.session.user_id = undefined;
             req.session.save();
 
             res.json({ success: true });
@@ -84,10 +86,10 @@ router.post("/logout", async (req, res) => {
 
 router.get("/current", async (req, res) => {
     try {
-        if (!req.session.username) {
+        if (!req.session.user_id) {
             res.status(401).json({ success: false, error: "You are not logged in" });
         } else {
-            res.json({ success: true, username: req.session.username });
+            res.json({ success: true, username: req.session.username, user_id: req.session.user_id });
         }
     } catch (err) {
         console.error(err);
